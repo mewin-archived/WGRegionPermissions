@@ -67,7 +67,7 @@ public class WGRegionPermissionsListener implements Listener {
         
         Map<String, Boolean> perms = attachment.getPermissions();
         
-        Utils.setPermissionsForLocation(wgPlugin, perms, e.getTo(), addedPermissions.get(e.getPlayer()), removedPermissions.get(e.getPlayer()));
+        Utils.setPermissionsForPlayer(wgPlugin, perms, e.getPlayer(), addedPermissions.get(e.getPlayer()), removedPermissions.get(e.getPlayer()));
         
         setPrivateValue(attachment, "permissions", perms);
         
