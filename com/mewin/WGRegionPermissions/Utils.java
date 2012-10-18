@@ -80,62 +80,6 @@ public final class Utils {
         }
     }
     
-    public static Set<String> getAdditionalPermissionsForLocation(WorldGuardPlugin wgp, Location loc)
-    {
-        RegionManager rm = wgp.getRegionManager(loc.getWorld());
-        
-        if (rm == null)
-        {
-            return new HashSet<>();
-        }
-        
-        ApplicableRegionSet regions = rm.getApplicableRegions(loc);
-        
-        HashSet<String> newPerms = new HashSet<>();
-        
-        for (ProtectedRegion region : regions)
-        {
-            Set<String> addPerms = (Set<String>) region.getFlag(WGRegionPermissionsPlugin.ADD_PERMISSIONS_FLAG);
-            
-            if (addPerms == null)
-            {
-                continue;
-            }
-            
-            newPerms.addAll(addPerms);
-        }
-        
-        return newPerms;
-    }
-    
-    public static Set<String> getRemovePermissionsForLocation(WorldGuardPlugin wgp, Location loc)
-    {
-        RegionManager rm = wgp.getRegionManager(loc.getWorld());
-        
-        if (rm == null)
-        {
-            return new HashSet<>();
-        }
-        
-        ApplicableRegionSet regions = rm.getApplicableRegions(loc);
-        
-        HashSet<String> newPerms = new HashSet<>();
-        
-        for (ProtectedRegion region : regions)
-        {
-            Set<String> addPerms = (Set<String>) region.getFlag(WGRegionPermissionsPlugin.REMOVE_PERMISSIONS_FLAG);
-            
-            if (addPerms == null)
-            {
-                continue;
-            }
-            
-            newPerms.addAll(addPerms);
-        }
-        
-        return newPerms;
-    }
-    
     public static boolean permissionAllowedAtLocation(WorldGuardPlugin wgp, String perm, Location loc)
     {
         RegionManager rm = wgp.getRegionManager(loc.getWorld());
