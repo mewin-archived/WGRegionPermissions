@@ -20,13 +20,13 @@ public final class Utils {
     
     public static void setPermissionsForLocation(WorldGuardPlugin wgp, Map<String, Boolean> perms, Location loc, Set<String> newPerms, Set<String> removePerms)
     {
-        //remove flags that have been added earlier (will be readded if still available)
+        //remove perms that have been added earlier (will be readded if still available)
         for (String newPerm : newPerms)
         {
             perms.remove(newPerm);
         }
         
-        //give the player the flags back that have been removed (will be removed again if still denied)
+        //give the player the perms back that have been removed (will be removed again if still denied)
         for (String removePerm : removePerms)
         {
             if (!newPerms.contains(removePerm)) //only if it wasn't added due to the region
