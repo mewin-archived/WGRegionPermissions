@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -18,8 +19,9 @@ import org.bukkit.Location;
  */
 public final class Utils {
     
-    public static void setPermissionsForLocation(WorldGuardPlugin wgp, Map<String, Boolean> perms, Location loc, Set<String> newPerms, Set<String> removePerms)
+    public static void setPermissionsForPlayer(WorldGuardPlugin wgp, Map<String, Boolean> perms, Player player, Set<String> newPerms, Set<String> removePerms)
     {
+        Location loc = player.getLocation();
         //remove perms that have been added earlier (will be readded if still available)
         for (String newPerm : newPerms)
         {
@@ -49,6 +51,10 @@ public final class Utils {
         
         for (ProtectedRegion region : regions)
         {
+            if (player.hasPermission("region.permissions.ignore") || player.hasPermission("region.permissions.ignore." + region.getId()))
+            {
+                continue;
+            }
             Set<String> addPerms = (Set<String>) region.getFlag(WGRegionPermissionsPlugin.ADD_PERMISSIONS_FLAG);
             
             //add possible new permissions
@@ -76,7 +82,7 @@ public final class Utils {
                 continue;
             }
             
-            if (!permissionAllowedAtLocation(wgp, entry.getKey(), loc))
+            if (!permissionAllowedAtLocation(wgp, entry.getKey(), loc, player))
             {
                 perms.put(entry.getKey(), Boolean.FALSE);
                 removePerms.add(entry.getKey());
@@ -84,7 +90,7 @@ public final class Utils {
         }
     }
     
-    public static boolean permissionAllowedAtLocation(WorldGuardPlugin wgp, String perm, Location loc)
+    public static boolean permissionAllowedAtLocation(WorldGuardPlugin wgp, String perm, Location loc, Player player)
     {
         RegionManager rm = wgp.getRegionManager(loc.getWorld());
         if (rm == null)
@@ -99,6 +105,11 @@ public final class Utils {
         while(itr.hasNext())
         {
             ProtectedRegion region = itr.next();
+            
+            if (player.hasPermission("region.permissions.ignore") || player.hasPermission("region.permissions.ignore." + region.getId()))
+            {
+                ignoredRegions.add(region);
+            }
             
             if (ignoredRegions.contains(region))
             {
