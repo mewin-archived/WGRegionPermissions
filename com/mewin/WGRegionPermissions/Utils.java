@@ -20,27 +20,29 @@ public final class Utils {
     
     public static void setPermissionsForLocation(WorldGuardPlugin wgp, Map<String, Boolean> perms, Location loc, Set<String> newPerms, Set<String> removePerms)
     {
+        //remove flags that have been added earlier (will be readded if still available)
         for (String newPerm : newPerms)
         {
             perms.remove(newPerm);
         }
         
+        //give the player the flags back that have been removed (will be removed again if still denied)
         for (String removePerm : removePerms)
         {
-            if (!newPerms.contains(removePerm))
+            if (!newPerms.contains(removePerm)) //only if it wasn't added due to the region
             {
                 perms.put(removePerm, Boolean.TRUE);
             }
         }
         
-        newPerms.clear();
+        newPerms.clear(); //these will be refilled
         removePerms.clear();
         
         RegionManager rm = wgp.getRegionManager(loc.getWorld());
         
         if (rm == null)
         {
-            return;
+            return; //WorldGuard disabled for this world
         }
         
         ApplicableRegionSet regions = rm.getApplicableRegions(loc);
@@ -49,6 +51,7 @@ public final class Utils {
         {
             Set<String> addPerms = (Set<String>) region.getFlag(WGRegionPermissionsPlugin.ADD_PERMISSIONS_FLAG);
             
+            //add possible new permissions
             if (addPerms == null)
             {
                 continue;
@@ -65,6 +68,7 @@ public final class Utils {
             }
         }
         
+        //remove all permissions that are not allowed in the region
         for (Entry<String, Boolean> entry : perms.entrySet())
         {
             if (entry.getValue() == Boolean.FALSE)
