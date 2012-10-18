@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mewin.WGRegionPermissions;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

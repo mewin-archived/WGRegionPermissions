@@ -1,4 +1,4 @@
 name: WorldGuard Region Permissions
 main: com.mewin.WGRegionPermissions.WGRegionPermissionsPlugin
 version: 1.0
-depend: [ WorldGuard, WGCustomFlags ]
+depend: [ WorldGuard, WorldEdit, WGCustomFlags ]
