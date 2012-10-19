@@ -2,3 +2,4 @@ name: WGRegionPermissions
 main: com.mewin.WGRegionPermissions.WGRegionPermissionsPlugin
 version: 1.0
 depend: [ WorldGuard, WorldEdit, WGCustomFlags ]
+softdepend: [ Vault ]
