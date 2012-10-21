@@ -1,5 +1,8 @@
 name: WGRegionPermissions
 main: com.mewin.WGRegionPermissions.WGRegionPermissionsPlugin
+description: WorldGuard extension to change the permissions based on the region the player is currently in.
 version: 1.0
+
+authors: [ mewin ]
 depend: [ WorldGuard, WGCustomFlags ]
 softdepend: [ Vault, WorldEdit ]
