@@ -27,6 +27,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -59,23 +60,30 @@ public class WGRegionPermissionsListener implements Listener {
         addedPermissions.put(e.getPlayer(), new HashSet<String>());
         removedPermissions.put(e.getPlayer(), new HashSet<String>());
     }
-    
+
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e)
     {
-        e.getPlayer().removeAttachment(attachments.remove(e.getPlayer()));
-        addedPermissions.remove(e.getPlayer());
-        removedPermissions.remove(e.getPlayer());
+        this.onPlayerLeave(e);
     }
-    
+
     @EventHandler
     public void onPlayerKick(PlayerKickEvent e)
     {
-        e.getPlayer().removeAttachment(attachments.remove(e.getPlayer()));
+        this.onPlayerLeave(e);
+    }
+
+    private void onPlayerLeave(PlayerEvent e)
+    {
+        PermissionAttachment attachment = attachments.remove(e.getPlayer());
+        if (attachment != null)
+        {
+            e.getPlayer().removeAttachment(attachment);
+        }
         addedPermissions.remove(e.getPlayer());
         removedPermissions.remove(e.getPlayer());
     }
-    
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e)
     {
