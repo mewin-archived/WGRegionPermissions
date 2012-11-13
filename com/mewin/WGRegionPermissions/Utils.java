@@ -115,8 +115,8 @@ public final class Utils {
         }
         ApplicableRegionSet regions = rm.getApplicableRegions(loc);
         Iterator<ProtectedRegion> itr = regions.iterator();
-        Map<ProtectedRegion, Boolean> regionsToCheck = new HashMap<>();
-        Set<ProtectedRegion> ignoredRegions = new HashSet<>();
+        Map<ProtectedRegion, Boolean> regionsToCheck = new HashMap<ProtectedRegion, Boolean>();
+        Set<ProtectedRegion> ignoredRegions = new HashSet<ProtectedRegion>();
         
         while(itr.hasNext())
         {
@@ -145,7 +145,7 @@ public final class Utils {
                     parent = parent.getParent();
                 }
                 
-                regionsToCheck.put(region, (boolean) allowed);
+                regionsToCheck.put(region, (Boolean) allowed);
             }
         }
         
@@ -179,7 +179,7 @@ public final class Utils {
             
             if (allowed != null)
             {
-                return (boolean) allowed;
+                return (Boolean) allowed;
             }
             else
             {

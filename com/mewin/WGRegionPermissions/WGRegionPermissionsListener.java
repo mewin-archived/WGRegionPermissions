@@ -46,9 +46,9 @@ public class WGRegionPermissionsListener implements Listener {
     
     public WGRegionPermissionsListener(WGRegionPermissionsPlugin plugin, WorldGuardPlugin wgPlugin)
     {
-        attachments = new HashMap<>();
-        addedPermissions = new HashMap<>();
-        removedPermissions = new HashMap<>();
+        attachments = new HashMap<Player, PermissionAttachment>();
+        addedPermissions = new HashMap<Player, Set<String>>();
+        removedPermissions = new HashMap<Player, Set<String>>();
         this.plugin = plugin;
         this.wgPlugin = wgPlugin;
     }
@@ -122,8 +122,10 @@ public class WGRegionPermissionsListener implements Listener {
             Field f = obj.getClass().getDeclaredField(name);
             f.setAccessible(true);
             f.set(obj, value);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            
+        } catch (NoSuchFieldException ex) {
+        } catch (SecurityException ex) {
+        } catch (IllegalArgumentException ex) {
+        } catch (IllegalAccessException ex) {
         }
     }
 }
